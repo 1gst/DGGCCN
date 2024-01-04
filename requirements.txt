@@ -1,0 +1,10 @@
+datasets~=2.3.2
+sklearn~=0.0
+scikit-learn~=0.24.1
+torch~=1.7.1
+transformers~=4.22.2
+numpy~=1.20.1
+pandas~=1.4.3
+apex~=0.1
+pyltp~=0.4.0
+tqdm~=4.64.0
