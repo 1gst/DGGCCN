@@ -44,8 +44,15 @@ class GCN(nn.Module):
         # x = self.gc2(x, adj)
 
         x = self.relu(self.gc1(x, adj))
-        x = self.relu(self.gc2(x, adj))
-        x = self.gc3(x, adj)
+        # x = self.relu(self.gc2(x, adj))
+        diag = torch.diag_embed(torch.diag(adj))
+        nodes = (adj - diag == 1).any(dim=1).nonzero().squeeze().tolist()
+        if type(nodes) is int:
+            nodes = [nodes]
+        new_adj = torch.zeros_like(adj) + diag
+        for i in nodes:
+            new_adj[:, i] = 1
+        x = self.gc2(x, new_adj)
         # x = self.relu(self.gc3(x, adj))
         # x = self.relu(self.gc4(x, adj))
         # x = self.gc5(x, adj)
